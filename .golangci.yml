@@ -1,0 +1,29 @@
+linters:
+  enable:
+    - govet
+    - revive
+    - errcheck
+    - gocyclo
+    - unused
+    - typecheck
+    - lll
+    - staticcheck
+
+  disable:
+    - misspell
+    - depguard
+
+issues:
+  exclude-rules:
+    - text: "Error return value is not checked"
+      linters:
+        - errcheck
+      exclude:
+        - ".*_test\\.go"
+
+  max-same-issues: 10
+
+run:
+  timeout: 2m
+
+min-linters-count: 3
