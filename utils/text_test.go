@@ -34,3 +34,17 @@ func TestReadInput(t *testing.T) {
 		})
 	}
 }
+
+func TestReadInputWithPanic(t *testing.T) {
+	t.Run("file not found", func(t *testing.T) {
+		path := "nonexistentfile.txt"
+
+		defer func() {
+			if r := recover(); r == nil {
+				t.Errorf("expected panic, but did not get one")
+			}
+		}()
+
+		ReadInput(path)
+	})
+}
