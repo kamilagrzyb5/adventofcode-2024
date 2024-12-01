@@ -3,6 +3,6 @@
 !*.go
 !*.mod
 !README.md
-!.github/workflows/test-coverage.yml
+!.github/workflows/*
 !utils/example.txt
 !.golangci.yml
