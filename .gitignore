@@ -3,3 +3,5 @@
 !*.go
 !*.mod
 !README.md
+!.github/workflows/test-coverage.yml
+!utils/example.txt
