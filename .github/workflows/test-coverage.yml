@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.21
+          go-version: 1.23
 
       - name: Run tests and generate coverage
         run: |
@@ -25,14 +25,14 @@ jobs:
           go tool cover -func=coverage.out
 
       - name: Upload coverage report to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV }}
           files: coverage.out
           flags: unittests
 
       - name: Upload coverage report as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage.out
@@ -40,7 +40,7 @@ jobs:
       - name: Install golangci-lint
         run: |
           curl -sSfL https://github.com/golangci/golangci-lint/releases/download/v1.61.0/golangci-lint-1.61.0-linux-amd64.tar.gz | tar -xz -C /tmp
-          sudo mv /tmp/golangci-lint-1.53.0-linux-amd64/golangci-lint /usr/local/bin/
+          sudo mv /tmp/golangci-lint-1.61.0-linux-amd64/golangci-lint /usr/local/bin/
 
       - name: Run golangci-lint
         run: golangci-lint run
