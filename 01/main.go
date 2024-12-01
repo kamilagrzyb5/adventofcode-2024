@@ -50,15 +50,14 @@ func CalculateDistance(s1, s2 []int) int {
 }
 
 func CalculateSimilarity(s1, s2 []int) int {
+	occ := make(map[int]int)
+	for _, r := range s2 {
+		occ[r]++
+	}
+
 	s := 0
 	for _, l := range s1 {
-		c := 0
-		for _, r := range s2 {
-			if l == r {
-				c++
-			}
-		}
-		s += l * c
+		s += l * occ[l]
 	}
 
 	return s
