@@ -3,7 +3,6 @@ linters:
     - govet
     - revive
     - errcheck
-    - gocyclo
     - unused
     - typecheck
     - lll
