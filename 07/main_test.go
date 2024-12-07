@@ -30,7 +30,7 @@ func TestEvals(t *testing.T) {
 					81, 40, 27,
 				},
 			},
-			want: []int{148, 3267, 3996, 88209},
+			want: []int{148, 3267, 3267, 87480},
 		},
 	}
 	for _, tt := range tests {
@@ -95,7 +95,7 @@ func TestAble(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Able(tt.args.result, tt.args.arr); got != tt.want {
+			if got := Able(tt.args.result, tt.args.arr, Evals); got != tt.want {
 				t.Errorf("Able() = %v, want %v", got, tt.want)
 			}
 		})
@@ -131,7 +131,7 @@ func TestSum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Sum(tt.args.arr); got != tt.want {
+			if got := Sum(tt.args.arr, Evals); got != tt.want {
 				t.Errorf("Sum() = %v, want %v", got, tt.want)
 			}
 		})
@@ -165,6 +165,59 @@ func TestConvert(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := Convert(tt.args.s); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Convert() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_concatenation(t *testing.T) {
+	type args struct {
+		a int
+		b int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test",
+			args: args{
+				a: 193,
+				b: 519,
+			},
+			want: 193519,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := concatenation(tt.args.a, tt.args.b); got != tt.want {
+				t.Errorf("concatenation() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestExtraEvals(t *testing.T) {
+	type args struct {
+		numbers []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "test",
+			args: args{
+				numbers: []int{10, 19},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ExtraEvals(tt.args.numbers); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ExtraEvals() = %v, want %v", got, tt.want)
 			}
 		})
 	}
