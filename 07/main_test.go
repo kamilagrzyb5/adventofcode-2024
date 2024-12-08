@@ -212,6 +212,7 @@ func TestExtraEvals(t *testing.T) {
 			args: args{
 				numbers: []int{10, 19},
 			},
+			want: []int{29, 190, 1019},
 		},
 	}
 	for _, tt := range tests {
