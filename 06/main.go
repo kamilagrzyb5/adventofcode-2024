@@ -14,6 +14,7 @@ func main() {
 	}
 
 	fmt.Printf("positions: %d\n", Positions(sl))
+	fmt.Printf("obstructions: %d\n", PossibleObstructions(sl))
 }
 
 var dirs = map[rune][]int{
@@ -79,4 +80,60 @@ func Positions(slice [][]rune) int {
 	}
 
 	return c + 1
+}
+
+func PossibleObstructions(slice [][]rune) int {
+	i, j, dir := StartPos(slice)
+	innerLen, outerLen := Lens(slice)
+	validPositions := 0
+
+	for x := 0; x < innerLen; x++ {
+		for y := 0; y < outerLen; y++ {
+			if slice[x][y] != '.' || (x == i && y == j) {
+				continue
+			}
+
+			slice[x][y] = '#'
+
+			if CausesLoop(slice, i, j, dir) {
+				validPositions++
+			}
+
+			slice[x][y] = '.'
+		}
+	}
+
+	return validPositions
+}
+
+func CausesLoop(slice [][]rune, startX, startY int, startDir rune) bool {
+	visited := map[p]map[rune]bool{}
+	i, j, dir := startX, startY, startDir
+	innerLen, outerLen := Lens(slice)
+
+	for i >= 0 && i < innerLen && j >= 0 && j < outerLen {
+		pos := p{i, j}
+
+		if _, exists := visited[pos]; exists {
+			if visited[pos][dir] {
+				return true
+			}
+		} else {
+			visited[pos] = map[rune]bool{}
+		}
+		visited[pos][dir] = true
+
+		if slice[i][j] == '#' {
+			if currDir, ok := rotateDirs[dir]; ok {
+				i, j = i+currDir[0], j+currDir[1]
+				dir = swapDirs[dir]
+				continue
+			}
+		}
+		if currDir, ok := dirs[dir]; ok {
+			i, j = i+currDir[0], j+currDir[1]
+		}
+	}
+
+	return false
 }
