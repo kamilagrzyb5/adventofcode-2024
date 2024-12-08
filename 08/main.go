@@ -6,8 +6,11 @@ import (
 )
 
 func main() {
-	sum := Sum(Antinodes(MakePoints(utils.ReadInput("08/input.txt"))))
+	pts := MakePoints(utils.ReadInput("08/input.txt"))
+	sum := Sum(Antinodes(pts))
+	sum2 := Sum(ExtraAntinodes(pts))
 	fmt.Println(sum)
+	fmt.Println(sum2)
 }
 
 type Point struct {
@@ -53,6 +56,29 @@ func Antinodes(points Points) Points {
 				_, idx := points.Find(point.i+(point.i-p.i), point.j+(point.j-p.j))
 				if idx != -1 {
 					points[idx].antinode = true
+				}
+			}
+		}
+	}
+	return points
+}
+
+func ExtraAntinodes(points Points) Points {
+	for i, point := range points {
+		for _, p := range points {
+			if point.Antena() && point.sign == p.sign {
+				pI, pJ := point.i+(point.i-p.i), point.j+(point.j-p.j)
+				for {
+					_, idx := points.Find(pI, pJ)
+					if idx == -1 {
+						break
+					}
+					if point == p {
+						points[i].antinode = true
+						break
+					}
+					points[idx].antinode = true
+					pI, pJ = pI+point.i-p.i, pJ+point.j-p.j
 				}
 			}
 		}
