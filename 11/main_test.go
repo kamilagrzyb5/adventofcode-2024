@@ -7,24 +7,36 @@ import (
 
 func TestBlink(t *testing.T) {
 	type args struct {
-		arr []int
+		m M
 	}
 	tests := []struct {
 		name string
 		args args
-		want []int
+		want M
 	}{
 		{
 			name: "test",
 			args: args{
-				arr: []int{0, 1, 10, 99, 999},
+				m: M{
+					0:   1,
+					1:   1,
+					10:  1,
+					99:  1,
+					999: 1,
+				},
 			},
-			want: []int{1, 2024, 1, 0, 9, 9, 2021976},
+			want: M{
+				0:       1,
+				1:       2,
+				9:       2,
+				2024:    1,
+				2021976: 1,
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Blink(tt.args.arr); !reflect.DeepEqual(got, tt.want) {
+			if got := Blink(tt.args.m); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Blink() = %v, want %v", got, tt.want)
 			}
 		})
@@ -33,28 +45,45 @@ func TestBlink(t *testing.T) {
 
 func TestBlinks(t *testing.T) {
 	type args struct {
-		arr []int
-		n   int
+		m M
+		n int
 	}
 	tests := []struct {
 		name string
 		args args
-		want []int
+		want M
 	}{
 		{
 			name: "test",
 			args: args{
-				arr: []int{125, 17},
-				n:   6,
+				m: M{
+					125: 1,
+					17:  1,
+				},
+				n: 6,
 			},
-			want: []int{
-				2097446912, 14168, 4048, 2, 0, 2, 4, 40, 48, 2024, 40, 48, 80, 96, 2, 8, 6, 7, 6, 0, 3, 2,
+			want: M{
+				0:          2,
+				2:          4,
+				3:          1,
+				4:          1,
+				6:          2,
+				7:          1,
+				8:          1,
+				40:         2,
+				48:         2,
+				80:         1,
+				96:         1,
+				2024:       1,
+				4048:       1,
+				14168:      1,
+				2097446912: 1,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Blinks(tt.args.arr, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := Blinks(tt.args.m, tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Blinks() = %v, want %v", got, tt.want)
 			}
 		})
