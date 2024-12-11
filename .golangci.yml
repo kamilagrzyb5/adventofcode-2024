@@ -2,10 +2,8 @@ linters:
   enable:
     - govet
     - revive
-    - errcheck
     - unused
     - typecheck
-    - lll
     - staticcheck
 
   disable:
@@ -14,11 +12,9 @@ linters:
 
 issues:
   exclude-rules:
-    - text: "Error return value is not checked"
+    - path: _test\.go
       linters:
-        - errcheck
-      exclude:
-        - ".*_test\\.go"
+        - lll
 
   max-same-issues: 10
 
